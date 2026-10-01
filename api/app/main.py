@@ -3,6 +3,7 @@ from fastapi.responses import JSONResponse
 
 app = FastAPI()
 
-@app.get('/')
+
+@app.get("/")
 def health():
     return JSONResponse(content="HirMe Server is runnig.....")

@@ -61,7 +61,7 @@ Everything else is stubbed, simplified, or cut. Cuts are listed below. Don't arg
 - [x] Monorepo: `/web`, `/api`, `/worker`, `/docs`
 - [x] FastAPI skeleton with structured dirs, `/api/v1` prefix, health check
 - [x] Next.js app, Tailwind, layout shell, role-based route groups
-- [ ] MySQL + Alembic migrations, Docker Compose (db, redis, api, web)
+- [x] MySQL + Alembic migrations, Docker Compose (db, redis, api, web)
 - [x] `.env` handling, no secrets committed
 - [ ] GitHub Actions: lint + test + build
 - [ ] Deploy target decided (Vercel web + Railway/Render api)
