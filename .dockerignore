@@ -1,0 +1,44 @@
+# VCS
+.git
+.gitignore
+
+# Env (inject at runtime, never bake into images)
+.env
+.env.*
+!.env.example
+
+# Python
+**/.venv
+**/venv
+**/__pycache__
+**/*.py[cod]
+**/.pytest_cache
+**/.mypy_cache
+**/.ruff_cache
+**/.coverage
+**/htmlcov
+**/tests
+
+# Node
+**/node_modules
+**/.next
+**/out
+**/npm-debug.log*
+
+# Local data
+api/uploads
+api/storage
+**/*.log
+
+# Docker / CI / editor
+docker-compose*.yml
+Dockerfile*
+.github
+.vscode
+.idea
+.DS_Store
+
+# Docs
+docs
+*.md
+!README.md

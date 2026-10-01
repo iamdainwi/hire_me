@@ -1,0 +1,52 @@
+# Env (keep .env.example committed)
+.env
+.env.*
+!.env.example
+
+# Python
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+*.egg-info/
+
+# Node
+node_modules/
+npm-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Next.js
+web/.next/
+web/out/
+*.tsbuildinfo
+next-env.d.ts
+
+# Build / dist
+dist/
+build/
+
+# Uploads & local storage
+api/uploads/
+api/storage/
+*.sqlite3
+
+# Docker local overrides
+docker-compose.override.yml
+
+# Logs
+*.log
+logs/
+
+# Editors / OS
+.vscode/*
+!.vscode/settings.json
+!.vscode/extensions.json
+.idea/
+.DS_Store
+Thumbs.db
