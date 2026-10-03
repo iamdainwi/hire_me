@@ -94,7 +94,7 @@ hire_me/
 
 - Frontend: Next.js, React, TypeScript, Tailwind CSS
 - Backend: Python, FastAPI, SQLAlchemy
-- Database layer: SQLAlchemy with a relational database
+- Database: PostgreSQL 16 with SQLAlchemy
 - Infrastructure: Docker and Docker Compose
 - Authentication: JWT with bcrypt password hashing
 
@@ -133,7 +133,7 @@ The project uses Docker Compose for local infrastructure:
 docker compose up --build
 ```
 
-However, the database and Compose configuration are currently being aligned. In particular, the task plan and API configuration still contain references to MySQL while the current Compose file uses PostgreSQL. Treat the bootstrap configuration as work in progress until that migration is finalized.
+The local database is PostgreSQL 16 and is provided by Docker Compose. PostgreSQL is the project's intended database; any remaining MySQL references in older planning/configuration files are stale and should be removed as part of repository cleanup.
 
 ## API
 
