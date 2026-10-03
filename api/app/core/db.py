@@ -1,19 +1,11 @@
 from sqlalchemy import create_engine
-from sqlalchemy.orm import sessionmaker
+from sqlalchemy.orm import DeclarativeBase, sessionmaker
+
 from app.core.config import settings
-from app.core.deps import Base
 
-engine = create_engine(settings.DATABASE_URL, echo=True)
-
-SessionLocal = sessionmaker(bind=engine)
-
-Base.metadata.create_all(bind=engine)
+engine = create_engine(settings.DATABASE_URL, pool_pre_ping=True)
+SessionLocal = sessionmaker(bind=engine, autoflush=False, expire_on_commit=False)
 
 
-def get_session():
-    session = SessionLocal()
-
-    try:
-        yield session
-    finally:
-        session.close()
+class Base(DeclarativeBase):
+    pass

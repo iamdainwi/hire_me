@@ -1,8 +1,13 @@
-from sqlalchemy.orm import DeclarativeBase
+from collections.abc import Generator
+
+from sqlalchemy.orm import Session
+
+from app.core.db import SessionLocal
 
 
-class Base(DeclarativeBase):
-    pass
-
-
-__all__ = ["Base"]
+def get_db() -> Generator[Session, None, None]:
+    db = SessionLocal()
+    try:
+        yield db
+    finally:
+        db.close()
