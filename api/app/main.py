@@ -1,9 +1,6 @@
 from fastapi import FastAPI
-from fastapi.responses import JSONResponse
 
-app = FastAPI()
+from app.features.auth.router import router as auth_router
 
-
-@app.get("/")
-def health():
-    return JSONResponse(content="HirMe Server is runnig.....")
+app = FastAPI(title="HireMe API")
+app.include_router(auth_router, prefix="/api/v1")
