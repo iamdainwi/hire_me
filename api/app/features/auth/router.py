@@ -20,8 +20,12 @@ from app.integrations.email import send_verification_email
 router = APIRouter(prefix="/auth", tags=["auth"])
 
 
-@router.post("/register", response_model=UserResponse, status_code=status.HTTP_201_CREATED)
-def register(data: RegisterRequest, background: BackgroundTasks, db: Session = Depends(get_db)):
+@router.post(
+    "/register", response_model=UserResponse, status_code=status.HTTP_201_CREATED
+)
+def register(
+    data: RegisterRequest, background: BackgroundTasks, db: Session = Depends(get_db)
+):
     user, token = service.register(db, data)
     background.add_task(send_verification_email, user.email, token)
     return user
@@ -43,7 +47,9 @@ def verify_email(data: VerifyEmailRequest, db: Session = Depends(get_db)):
 
 
 @router.post("/resend-verification", status_code=status.HTTP_204_NO_CONTENT)
-def resend_verification(background: BackgroundTasks, user: User = Depends(get_current_user)):
+def resend_verification(
+    background: BackgroundTasks, user: User = Depends(get_current_user)
+):
     if not user.is_verified:
         background.add_task(
             send_verification_email, user.email, service.verification_token(user)

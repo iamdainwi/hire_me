@@ -43,13 +43,19 @@ def get_user_by_id(db: Session, user_id: uuid.UUID) -> User | None:
 def issue_tokens(user: User) -> TokenResponse:
     sub = str(user.id)
     return TokenResponse(
-        access_token=create_token(sub, ACCESS, timedelta(minutes=settings.ACCESS_TTL_MIN)),
-        refresh_token=create_token(sub, REFRESH, timedelta(days=settings.REFRESH_TTL_DAYS)),
+        access_token=create_token(
+            sub, ACCESS, timedelta(minutes=settings.ACCESS_TTL_MIN)
+        ),
+        refresh_token=create_token(
+            sub, REFRESH, timedelta(days=settings.REFRESH_TTL_DAYS)
+        ),
     )
 
 
 def verification_token(user: User) -> str:
-    return create_token(str(user.id), VERIFY, timedelta(hours=settings.VERIFY_TTL_HOURS))
+    return create_token(
+        str(user.id), VERIFY, timedelta(hours=settings.VERIFY_TTL_HOURS)
+    )
 
 
 def user_from_token(db: Session, token: str, purpose: str) -> User:
@@ -96,7 +102,9 @@ def register(db: Session, data: RegisterRequest) -> tuple[User, str]:
 def login(db: Session, data: LoginRequest) -> TokenResponse:
     user = get_user_by_email(db, data.email)
     # constant-time path: always run bcrypt, even for unknown emails
-    password_ok = verify_password(data.password, user.password_hash if user else DUMMY_HASH)
+    password_ok = verify_password(
+        data.password, user.password_hash if user else DUMMY_HASH
+    )
     if user is None or not password_ok:
         raise HTTPException(status.HTTP_401_UNAUTHORIZED, "Invalid email or password")
     if user.status != UserStatus.active:
@@ -113,7 +121,9 @@ def verify_email(db: Session, token: str) -> None:
     try:
         user = user_from_token(db, token, VERIFY)
     except HTTPException:
-        raise HTTPException(status.HTTP_400_BAD_REQUEST, "Invalid or expired verification link")
+        raise HTTPException(
+            status.HTTP_400_BAD_REQUEST, "Invalid or expired verification link"
+        )
     if not user.is_verified:  # idempotent
         user.is_verified = True
         db.commit()
@@ -129,6 +139,8 @@ def update_profile(db: Session, user: User, data: UpdateProfileRequest) -> User:
 
 def change_password(db: Session, user: User, data: ChangePasswordRequest) -> None:
     if not verify_password(data.current_password, user.password_hash):
-        raise HTTPException(status.HTTP_400_BAD_REQUEST, "Current password is incorrect")
+        raise HTTPException(
+            status.HTTP_400_BAD_REQUEST, "Current password is incorrect"
+        )
     user.password_hash = hash_password(data.new_password)
     db.commit()

@@ -35,7 +35,9 @@ def create_token(sub: str, purpose: str, ttl: timedelta) -> str:
 
 def decode_token(token: str, purpose: str) -> dict:
     try:
-        payload = jwt.decode(token, settings.SECRET_KEY, algorithms=[settings.JWT_ALGORITHM])
+        payload = jwt.decode(
+            token, settings.SECRET_KEY, algorithms=[settings.JWT_ALGORITHM]
+        )
     except jwt.PyJWTError as exc:
         raise ValueError("invalid token") from exc
     if payload.get("purpose") != purpose:
